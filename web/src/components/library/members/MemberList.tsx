@@ -1,9 +1,8 @@
 import { PublicProfileList } from "src/api/openapi-schema";
+
 import { Empty } from "src/components/site/Empty";
-
-import { styled } from "@/styled-system/jsx";
-
 import { MemberCard } from "./MemberCard";
+import * as Table from "src/components/ui/table";
 
 type Props = {
   profiles: PublicProfileList;
@@ -16,20 +15,20 @@ export function MemberList(props: Props) {
   }
 
   return (
-    <styled.table
-      display="grid"
-      w="full"
-      style={{
-        gridTemplateColumns:
-          "minmax(150px, 2fr) minmax(150px, 1fr) min-content",
-      }}
-      gap="2"
-    >
-      <styled.tbody display="contents">
-        {props.profiles.map((v) => (
-          <MemberCard key={v.id} {...v} onChange={props.onChange} />
-        ))}
-      </styled.tbody>
-    </styled.table>
+    <Table.Root>
+    <Table.Caption>Recent members</Table.Caption>
+    <Table.Head>
+      <Table.Row textTransform="uppercase">
+        <Table.Header>Name</Table.Header>
+        <Table.Header>Member since</Table.Header>
+        <Table.Header>Roles</Table.Header>
+      </Table.Row>
+    </Table.Head>
+    <Table.Body>
+      {props.profiles.map((profile) => (
+        < MemberCard profile={profile} />
+      ))}
+    </Table.Body>
+  </Table.Root>
   );
 }
